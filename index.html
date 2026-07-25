@@ -266,9 +266,9 @@
       const totalPages = Math.ceil(allData.length / rowsPerPage);
       
       // ดึงข้อมูลเฉพาะช่วงของหน้านั้นๆ
-      const startIndex = (currentPage - 1) * rowsPerPage;
-      const endIndex = startIndex + rowsPerPage;
-      const paginatedData = allData.slice(startIndex, endIndex);
+      const startindex = (currentPage - 1) * rowsPerPage;
+      const endindex = startindex + rowsPerPage;
+      const paginatedData = allData.slice(startindex, endindex);
 
       // วาดตาราง
       paginatedData.forEach((row) => {
