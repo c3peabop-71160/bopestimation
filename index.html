@@ -4,50 +4,28 @@
   <meta charset="UTF-8">
   <title>คุมเลขที่แบบ งานขยายเขต</title>
   
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Bootstrap 5 Dark -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-  <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <style>
-    body {
-      font-family: 'Bai Jamjuree', sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-    }
+    body { font-family: 'Bai Jamjuree', sans-serif; background-color: #121212; color: #e0e0e0; }
     .container { max-width: 1200px; margin-top: 30px; margin-bottom: 80px; }
     .card { background-color: #1e1e1e; border: 1px solid #333; }
-    
-    /* Table Styling */
     .table-dark { background-color: #1e1e1e; }
     .table th, .table td { border-color: #444; vertical-align: middle; }
-    
     .col-d { width: 200px; min-width: 200px; max-width: 200px; }
     .col-e { width: 700px; min-width: 700px; max-width: 700px; word-wrap: break-word; }
-    
     .realtime-badge {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #198754;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      z-index: 1000;
+      position: fixed; bottom: 20px; right: 20px; background-color: #198754; color: white;
+      padding: 10px 20px; border-radius: 30px; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 1000;
     }
   </style>
 </head>
 <body>
 
-  <!-- Real-time Badge -->
   <div class="realtime-badge">
     <i class="fa fa-users"></i> ออนไลน์: <span id="userCount" class="fw-bold">1</span> คน
   </div>
@@ -55,17 +33,13 @@
   <div class="container">
     <h2 class="text-center mb-4 text-warning">คุมเลขที่แบบ งานขยายเขต</h2>
 
-    <!-- Form Section -->
     <div class="card p-4 mb-5 shadow">
       <form id="dataForm" onsubmit="submitForm(event)">
         <div class="row g-3">
-          <!-- Column J -->
           <div class="col-md-6">
             <label class="form-label">วันที่ (DD/MM/YYYY ค.ศ.) *</label>
             <input type="date" class="form-control" id="dateInput" required>
           </div>
-
-          <!-- Column C -->
           <div class="col-md-6">
             <label class="form-label">ขนาดกระดาษ *</label>
             <select class="form-select mb-2" id="paperSizeSelect" onchange="toggleInput('paperSizeSelect', 'paperSizeOther')" required>
@@ -76,14 +50,10 @@
             </select>
             <input type="number" class="form-control d-none" id="paperSizeOther" placeholder="ระบุขนาดกระดาษ (ตัวเลข)">
           </div>
-
-          <!-- Column E -->
           <div class="col-md-12">
             <label class="form-label">ชื่องานขยายเขต *</label>
             <input type="text" class="form-control" id="jobName" required>
           </div>
-
-          <!-- Column F -->
           <div class="col-md-6">
             <label class="form-label">ประเภทงาน *</label>
             <select class="form-select mb-2" id="jobTypeSelect" onchange="toggleInput('jobTypeSelect', 'jobTypeOther')" required>
@@ -98,27 +68,20 @@
             </select>
             <input type="text" class="form-control d-none" id="jobTypeOther" placeholder="ระบุประเภทงาน">
           </div>
-
-          <!-- Column G -->
           <div class="col-md-6">
             <label class="form-label">ผู้รับผิดชอบ (รหัสพนักงาน 6-7 หลัก) *</label>
-            <!-- ดักจับด้วย JavaScript ให้พิมพ์ได้แค่ตัวเลข 0-9 และบังคับความยาว 6-7 ตัว -->
             <input type="text" class="form-control" id="empId" pattern="\d{6,7}" minlength="6" maxlength="7" oninput="this.value = this.value.replace(/[^0-9]/g, '');" title="ระบุตัวเลข 6-7 หลักเท่านั้น" required>
           </div>
         </div>
-
         <div class="text-center mt-4">
           <button type="submit" class="btn btn-warning px-5 py-2 fw-bold" id="submitBtn">บันทึกข้อมูล</button>
         </div>
       </form>
     </div>
 
-    <!-- Table Section -->
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="text-light mb-0">ประวัติการบันทึก (ล่าสุดอยู่บนสุด)</h4>
-      <button class="btn btn-outline-info btn-sm px-3" id="refreshBtn" onclick="loadTable(true)">
-        🔄 รีเฟรชข้อมูล
-      </button>
+      <button class="btn btn-outline-info btn-sm px-3" id="refreshBtn" onclick="loadTable(true)">🔄 รีเฟรชข้อมูล</button>
     </div>
     
     <div class="table-responsive mb-2">
@@ -137,7 +100,6 @@
       </table>
     </div>
 
-    <!-- Pagination Section -->
     <div class="d-flex justify-content-between align-items-center">
       <span id="pageInfo" class="text-secondary small">หน้า 1 จาก 1 (ทั้งหมด 0 รายการ)</span>
       <div class="btn-group shadow-sm">
@@ -148,14 +110,16 @@
   </div>
 
   <script>
+    // ==========================================
+    // นำลิงก์ Web App URL ที่ได้จากขั้นตอนที่ 1 มาวางแทนที่ด้านล่างนี้
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPx7fA1BO7W9XQfdgNu5d0gwwGoSfjdH6iQWQSwyXxbDfBZZa-n_yRgkulKV_Z8oc6/exec'; 
+    // ==========================================
+
     const userId = 'user_' + Math.random().toString(36).substr(2, 9);
-    
-    // ตัวแปรสำหรับ Pagination
     let allData = [];
     let currentPage = 1;
     const rowsPerPage = 20;
 
-    // ตั้งค่า Date input เป็นวันปัจจุบัน
     document.getElementById('dateInput').valueAsDate = new Date();
 
     function toggleInput(selectId, inputId) {
@@ -170,9 +134,8 @@
       }
     }
 
-    function submitForm(e) {
+    async function submitForm(e) {
       e.preventDefault();
-      
       const btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> กำลังบันทึก...';
@@ -191,42 +154,43 @@
         empId: document.getElementById('empId').value
       };
 
-      google.script.run
-        .withSuccessHandler(function(generatedColD) {
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          // ใช้ text/plain เพื่อหลีกเลี่ยงปัญหา CORS Preflight error ข้ามโดเมน
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'saveData', data: formData })
+        });
+        
+        const result = await response.json();
+        
+        if(result.status === 'success') {
           Swal.fire({
             icon: 'success',
             title: 'บันทึกสำเร็จ!',
-            html: `สร้างเลขที่แบบเรียบร้อยแล้ว<br><h3 class="text-warning mt-2">${generatedColD}</h3>`,
-            background: '#1e1e1e',
-            color: '#fff',
-            confirmButtonColor: '#ffc107'
+            html: `สร้างเลขที่แบบเรียบร้อยแล้ว<br><h3 class="text-warning mt-2">${result.generatedCode}</h3>`,
+            background: '#1e1e1e', color: '#fff', confirmButtonColor: '#ffc107'
           });
-          
           document.getElementById('dataForm').reset();
           document.getElementById('dateInput').valueAsDate = new Date();
           document.getElementById('paperSizeOther').classList.add('d-none');
           document.getElementById('jobTypeOther').classList.add('d-none');
-          
-          btn.disabled = false;
-          btn.innerHTML = 'บันทึกข้อมูล';
-          
-          loadTable(); // รีเฟรชตารางดึงข้อมูลใหม่
-        })
-        .withFailureHandler(function(error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'เกิดข้อผิดพลาด',
-            text: error.message,
-            background: '#1e1e1e',
-            color: '#fff'
-          });
-          btn.disabled = false;
-          btn.innerHTML = 'บันทึกข้อมูล';
-        })
-        .saveData(formData);
+          loadTable();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: 'error', title: 'เกิดข้อผิดพลาด', text: error.message,
+          background: '#1e1e1e', color: '#fff'
+        });
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'บันทึกข้อมูล';
+      }
     }
 
-    function loadTable(isRefreshClick = false) {
+    async function loadTable(isRefreshClick = false) {
       const tbody = document.getElementById('tableBody');
       const refreshBtn = document.getElementById('refreshBtn');
       
@@ -236,31 +200,28 @@
         tbody.innerHTML = '<tr><td colspan="4">กำลังดึงข้อมูล...</td></tr>';
       }
 
-      google.script.run
-        .withSuccessHandler(function(data) {
-          allData = data;
-          currentPage = 1; // รีเซ็ตกลับมาหน้าแรกทุกครั้งที่โหลดข้อมูลใหม่
+      try {
+        const response = await fetch(SCRIPT_URL + '?action=getTableData');
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+          allData = result.data;
+          currentPage = 1; 
           renderTable();
-          
-          if (isRefreshClick) {
-            refreshBtn.disabled = false;
-            refreshBtn.innerHTML = '🔄 รีเฟรชข้อมูล';
-          }
-        })
-        .withFailureHandler(function(error) {
-           if (isRefreshClick) {
-            refreshBtn.disabled = false;
-            refreshBtn.innerHTML = '🔄 รีเฟรชข้อมูล';
-          }
-        })
-        .getTableData();
+        }
+      } catch (error) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-danger">ไม่สามารถเชื่อมต่อฐานข้อมูลได้</td></tr>';
+      } finally {
+        if (isRefreshClick) {
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML = '🔄 รีเฟรชข้อมูล';
+        }
+      }
     }
 
-    // ฟังก์ชันสร้างตารางตามหน้า (Pagination Render)
     function renderTable() {
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
-
       if (allData.length === 0) {
         tbody.innerHTML = '<tr><td colspan="4">ไม่มีข้อมูล</td></tr>';
         document.getElementById('pageInfo').innerText = 'หน้า 0 จาก 0 (ทั้งหมด 0 รายการ)';
@@ -268,16 +229,11 @@
         document.getElementById('nextBtn').disabled = true;
         return;
       }
-
-      // คำนวณจำนวนหน้า
       const totalPages = Math.ceil(allData.length / rowsPerPage);
-      
-      // ดึงข้อมูลเฉพาะช่วงของหน้านั้นๆ
-      const startindex = (currentPage - 1) * rowsPerPage;
-      const endindex = startindex + rowsPerPage;
-      const paginatedData = allData.slice(startindex, endindex);
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      const paginatedData = allData.slice(startIndex, endIndex);
 
-      // วาดตาราง
       paginatedData.forEach((row) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -288,31 +244,33 @@
         `;
         tbody.appendChild(tr);
       });
-
-      // อัปเดตข้อความบอกหน้าและปุ่มกด
       document.getElementById('pageInfo').innerText = `หน้า ${currentPage} จาก ${totalPages} (ทั้งหมด ${allData.length} รายการ)`;
       document.getElementById('prevBtn').disabled = (currentPage === 1);
       document.getElementById('nextBtn').disabled = (currentPage === totalPages);
     }
 
-    // ฟังก์ชันเปลี่ยนหน้า
     function changePage(direction) {
       const totalPages = Math.ceil(allData.length / rowsPerPage);
       currentPage += direction;
-      
       if (currentPage < 1) currentPage = 1;
       if (currentPage > totalPages) currentPage = totalPages;
-      
       renderTable();
     }
 
-    // ระบบเช็คคนออนไลน์
-    function keepAlive() {
-      google.script.run
-        .withSuccessHandler(count => {
-          document.getElementById('userCount').innerText = count;
-        })
-        .updatePresence(userId);
+    async function keepAlive() {
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'updatePresence', userId: userId })
+        });
+        const result = await response.json();
+        if(result.status === 'success') {
+          document.getElementById('userCount').innerText = result.count;
+        }
+      } catch (error) {
+        console.error("Keep alive failed");
+      }
     }
 
     window.onload = function() {
