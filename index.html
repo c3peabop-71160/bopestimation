@@ -59,11 +59,13 @@
     <div class="card p-4 mb-5 shadow">
       <form id="dataForm" onsubmit="submitForm(event)">
         <div class="row g-3">
+          <!-- Column J -->
           <div class="col-md-6">
             <label class="form-label">วันที่ (DD/MM/YYYY ค.ศ.) *</label>
             <input type="date" class="form-control" id="dateInput" required>
           </div>
 
+          <!-- Column C -->
           <div class="col-md-6">
             <label class="form-label">ขนาดกระดาษ *</label>
             <select class="form-select mb-2" id="paperSizeSelect" onchange="toggleInput('paperSizeSelect', 'paperSizeOther')" required>
@@ -75,11 +77,13 @@
             <input type="number" class="form-control d-none" id="paperSizeOther" placeholder="ระบุขนาดกระดาษ (ตัวเลข)">
           </div>
 
+          <!-- Column E -->
           <div class="col-md-12">
             <label class="form-label">ชื่องานขยายเขต *</label>
             <input type="text" class="form-control" id="jobName" required>
           </div>
 
+          <!-- Column F -->
           <div class="col-md-6">
             <label class="form-label">ประเภทงาน *</label>
             <select class="form-select mb-2" id="jobTypeSelect" onchange="toggleInput('jobTypeSelect', 'jobTypeOther')" required>
@@ -95,8 +99,10 @@
             <input type="text" class="form-control d-none" id="jobTypeOther" placeholder="ระบุประเภทงาน">
           </div>
 
+          <!-- Column G -->
           <div class="col-md-6">
-            <label class="form-label">ผู้รับผิดชอบ (รหัสพนักงาน) *</label>
+            <label class="form-label">ผู้รับผิดชอบ (รหัสพนักงาน 6-7 หลัก) *</label>
+            <!-- ดักจับด้วย JavaScript ให้พิมพ์ได้แค่ตัวเลข 0-9 และบังคับความยาว 6-7 ตัว -->
             <input type="text" class="form-control" id="empId" pattern="\d{6,7}" minlength="6" maxlength="7" oninput="this.value = this.value.replace(/[^0-9]/g, '');" title="ระบุตัวเลข 6-7 หลักเท่านั้น" required>
           </div>
         </div>
@@ -149,6 +155,7 @@
     let currentPage = 1;
     const rowsPerPage = 20;
 
+    // ตั้งค่า Date input เป็นวันปัจจุบัน
     document.getElementById('dateInput').valueAsDate = new Date();
 
     function toggleInput(selectId, inputId) {
@@ -203,7 +210,7 @@
           btn.disabled = false;
           btn.innerHTML = 'บันทึกข้อมูล';
           
-          loadTable(); 
+          loadTable(); // รีเฟรชตารางดึงข้อมูลใหม่
         })
         .withFailureHandler(function(error) {
           Swal.fire({
@@ -299,6 +306,7 @@
       renderTable();
     }
 
+    // ระบบเช็คคนออนไลน์
     function keepAlive() {
       google.script.run
         .withSuccessHandler(count => {
